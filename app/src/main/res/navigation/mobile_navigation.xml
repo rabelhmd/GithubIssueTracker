@@ -3,16 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_commit">
 
     <fragment
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_commit"
         android:name="com.example.githubissuetracker.ui.commits.CommitFragment"
         android:label="@string/title_flutter_issue_tacker"
         tools:layout="@layout/fragment_commit" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_user_profile"
         android:name="com.example.githubissuetracker.ui.userprofile.UserProfileFragment"
         android:label="@string/title_user_profile"
         tools:layout="@layout/fragment_user_profile" />

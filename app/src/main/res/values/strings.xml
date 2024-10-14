@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">GithubIssueTracker</string>
+    <string name="title_flutter_issue_tacker">Flutter Issue Tracker</string>
+    <string name="title_commit">Commit</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_user_profile">UserProfile</string>
+</resources>

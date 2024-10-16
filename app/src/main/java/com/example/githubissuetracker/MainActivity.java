@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
-    private IssueListRepository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,52 +45,5 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
-
-        repository = new IssueListRepositoryImpl();
-        //fetchNextPage();
-        searchIssues("App");
     }
-
-    public void fetchNextPage() {
-        int issuesCount = 1;
-        int pageSize = 30;
-        int page = issuesCount / pageSize + 1;
-        repository.fetchIssues("flutter", "flutter", page, pageSize, new NetworkCallback<List<IssueListItem>>() {
-            @Override
-            public void onSuccess(List<IssueListItem> data) {
-                Log.d("fetchNextPage: Success", "" + data.size());
-                for(IssueListItem issueListItem: data) {
-                    Log.d("Item ID: " + issueListItem.getId(), "title: " + issueListItem.getTitle());
-                }
-            }
-            @Override
-            public void onFailure(Exception e) {
-                Log.d("fetchNextPage: ERROR", "" + e.getMessage());
-            }
-        });
-    }
-
-    public void searchIssues(String q) {
-
-        String encodedQuery = q.replace(" ", "%20");
-        final String query = encodedQuery + "+repo:flutter/flutter";
-        int pageSize = 30;
-        int page = 1;
-
-        repository.searchIssues(query, pageSize, page, new NetworkCallback<List<IssueListItem>>() {
-            @Override
-            public void onSuccess(List<IssueListItem> data) {
-                Log.d("searchIssues: Q: ", "" + data.size());
-                for(IssueListItem issueListItem: data) {
-                    Log.d("Item ID: " + issueListItem.getId(), "title: " + issueListItem.getTitle());
-                }
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                Log.d("searchIssues: ERROR", "" + e.getMessage());
-            }
-        });
-    }
-
 }

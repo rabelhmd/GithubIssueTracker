@@ -3,7 +3,7 @@ package com.example.githubissuetracker.models;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
-import com.example.githubissuetracker.models.User;
+import com.example.githubissuetracker.models.issueListItem.User;
 
 
 public class Issue {
@@ -34,6 +34,10 @@ public class Issue {
         this.createdAt = createdAt;
         this.user = user;
         this.state = state;
+    }
+
+    public Issue() {
+
     }
 
     // Getters and setters

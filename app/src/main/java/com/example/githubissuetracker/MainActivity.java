@@ -1,9 +1,13 @@
 package com.example.githubissuetracker;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.githubissuetracker.models.Issue;
-import com.example.githubissuetracker.service.GitHubService;
+import com.example.githubissuetracker.models.issueListItem.IssueListItem;
+import com.example.githubissuetracker.repository.IssueListRepository;
+import com.example.githubissuetracker.repository.IssueListRepositoryImpl;
+import com.example.githubissuetracker.service.NetworkCallback;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,12 +19,16 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.githubissuetracker.databinding.ActivityMainBinding;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Call;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+
+    private IssueListRepository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,51 +47,51 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
-        fetchIssue();
-        fetchQuery("App");
+        repository = new IssueListRepositoryImpl();
+        //fetchNextPage();
+        searchIssues("App");
     }
 
-    private  void fetchQuery(String query) {
-        System.out.println("Issue Query: " + query);
-
-        GitHubService service = new GitHubService();
-        service.searchIssues("flutter/flutter", query, new GitHubService.Callback() {
+    public void fetchNextPage() {
+        int issuesCount = 1;
+        int pageSize = 30;
+        int page = issuesCount / pageSize + 1;
+        repository.fetchIssues("flutter", "flutter", page, pageSize, new NetworkCallback<List<IssueListItem>>() {
             @Override
-            public void onSuccess(Issue[] issues) {
-                System.out.println("Query Total: " + issues.length);
-                for (Issue issue : issues) {
-                    System.out.println("Query Title: " + issue.getTitle());
-                    //System.out.println("Created by: " + issue.getUser().getLogin());
+            public void onSuccess(List<IssueListItem> data) {
+                Log.d("fetchNextPage: Success", "" + data.size());
+                for(IssueListItem issueListItem: data) {
+                    Log.d("Item ID: " + issueListItem.getId(), "title: " + issueListItem.getTitle());
+                }
+            }
+            @Override
+            public void onFailure(Exception e) {
+                Log.d("fetchNextPage: ERROR", "" + e.getMessage());
+            }
+        });
+    }
+
+    public void searchIssues(String q) {
+
+        String encodedQuery = q.replace(" ", "%20");
+        final String query = encodedQuery + "+repo:flutter/flutter";
+        int pageSize = 30;
+        int page = 1;
+
+        repository.searchIssues(query, pageSize, page, new NetworkCallback<List<IssueListItem>>() {
+            @Override
+            public void onSuccess(List<IssueListItem> data) {
+                Log.d("searchIssues: Q: ", "" + data.size());
+                for(IssueListItem issueListItem: data) {
+                    Log.d("Item ID: " + issueListItem.getId(), "title: " + issueListItem.getTitle());
                 }
             }
 
             @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();  // Handle the error
-            }
-        });
-
-    }
-
-    private void fetchIssue() {
-
-        GitHubService service = GitHubService.getInstance();
-        service.fetchIssues("flutter/flutter", 1, 30, new GitHubService.Callback() {
-            @Override
-            public void onSuccess(Issue[] issues) {
-                // Handle the array of issues (e.g., update UI)
-                System.out.println("Total Issues: " + issues.length);
-                for (Issue issue : issues) {
-                    System.out.println("Issue Title: " + issue.getTitle());
-//                    System.out.println("Author: " + issue.getUser().getLogin());
-//                    System.out.println("Avatar URL: " + issue.getUser().getAvatarUrl());
-                }
-            }
-
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();  // Handle the error
+            public void onFailure(Exception e) {
+                Log.d("searchIssues: ERROR", "" + e.getMessage());
             }
         });
     }
+
 }

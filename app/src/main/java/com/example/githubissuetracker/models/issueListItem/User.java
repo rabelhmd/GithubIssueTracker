@@ -1,7 +1,10 @@
 package com.example.githubissuetracker.models.issueListItem;
 
 import com.google.gson.annotations.SerializedName;
-public class User {
+
+import java.io.Serializable;
+
+public class User implements Serializable {
     @SerializedName("login")
     private String login;
 

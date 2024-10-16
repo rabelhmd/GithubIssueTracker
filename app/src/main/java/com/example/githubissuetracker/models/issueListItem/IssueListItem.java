@@ -2,9 +2,10 @@ package com.example.githubissuetracker.models.issueListItem;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class IssueListItem {
+public class IssueListItem implements Serializable {
     @SerializedName("url")
     private String url;
 

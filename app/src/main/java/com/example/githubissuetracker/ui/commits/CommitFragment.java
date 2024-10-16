@@ -1,5 +1,6 @@
 package com.example.githubissuetracker.ui.commits;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.githubissuetracker.databinding.FragmentCommitBinding;
 import com.example.githubissuetracker.models.issueListItem.IssueListItem;
+import com.example.githubissuetracker.ui.markdown.IssueDetailsViewer;
 
 import java.util.List;
 public class CommitFragment extends Fragment {
@@ -49,7 +51,9 @@ public class CommitFragment extends Fragment {
 
             @Override
             public void showDetailsView(IssueListItem item) {
-
+                Intent intent = new Intent(getContext(), IssueDetailsViewer.class);
+                intent.putExtra("issue_details_info", item);
+                requireContext().startActivity(intent);
             }
         });
         binding.recyclerViewIssues.setAdapter(issueAdapter);

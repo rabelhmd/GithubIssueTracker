@@ -1,6 +1,7 @@
 package com.example.githubissuetracker.service;
 
 
+import com.example.githubissuetracker.models.UserProfile;
 import com.example.githubissuetracker.models.issueListItem.IssueListItem;
 import com.example.githubissuetracker.models.SearchResult;
 
@@ -17,4 +18,7 @@ public interface GitHubApiService {
 
     @GET("search/issues")
     Call<SearchResult> searchIssues(@Query("q") String query, @Query("per_page") int perPage, @Query("page") int page);
+
+    @GET("users/{username}")
+    Call<UserProfile> fetchUser(@Path("username") String username);
 }

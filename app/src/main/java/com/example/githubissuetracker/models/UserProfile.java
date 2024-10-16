@@ -44,6 +44,10 @@ public class UserProfile {
     @SerializedName("bio")
     private String bio;
 
+    public UserProfile() {
+
+    }
+
     // Getters and setters for each field
     public String getLogin() {
         return login;

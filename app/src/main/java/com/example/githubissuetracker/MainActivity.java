@@ -1,13 +1,7 @@
 package com.example.githubissuetracker;
 
 import android.os.Bundle;
-import android.util.Log;
 
-import com.example.githubissuetracker.models.Issue;
-import com.example.githubissuetracker.models.issueListItem.IssueListItem;
-import com.example.githubissuetracker.repository.IssueListRepository;
-import com.example.githubissuetracker.repository.IssueListRepositoryImpl;
-import com.example.githubissuetracker.service.NetworkCallback;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,11 +12,6 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.githubissuetracker.databinding.ActivityMainBinding;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import okhttp3.Call;
 
 public class MainActivity extends AppCompatActivity {
 

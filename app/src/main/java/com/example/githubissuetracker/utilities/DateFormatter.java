@@ -23,17 +23,9 @@ public class DateFormatter {
 
                 Calendar today = Calendar.getInstance();
                 // Check if within the last 7 days
-                if (today.get(Calendar.YEAR) == calendar.get(Calendar.YEAR) &&
-                        today.get(Calendar.DAY_OF_YEAR) == calendar.get(Calendar.DAY_OF_YEAR)) {
-                    return "Today";
-                } else if (today.get(Calendar.YEAR) == calendar.get(Calendar.YEAR) &&
-                        today.get(Calendar.DAY_OF_YEAR) == calendar.get(Calendar.DAY_OF_YEAR) - 1) {
-                    return "Yesterday";
-                } else if (today.get(Calendar.YEAR) == calendar.get(Calendar.YEAR) &&
-                        today.get(Calendar.DAY_OF_YEAR) <= calendar.get(Calendar.DAY_OF_YEAR) + 7) {
-                    return dayFormat.format(date);
-                }
-
+                if(isSameDay(today, calendar)) return "Today";
+                else if (isYesterDay(today, calendar)) return "Yesterday";
+                else if(isSameWeek(today, calendar)) return dayFormat.format(date);
                 // Fallback to MM/dd/yyyy format
                 return outputFormat.format(date);
             }
@@ -43,5 +35,16 @@ public class DateFormatter {
         return ""; // or throw an exception based on your use case
     }
 
+    public static boolean isSameDay(Calendar date1, Calendar date2) {
+        return (date1.get(Calendar.YEAR) == date2.get(Calendar.YEAR) && date1.get(Calendar.DAY_OF_YEAR) == date2.get(Calendar.DAY_OF_YEAR));
+    }
+
+    public static boolean isSameWeek(Calendar date1, Calendar date2) {
+        return (date1.get(Calendar.YEAR) == date2.get(Calendar.YEAR) && date1.get(Calendar.DAY_OF_YEAR) <= date2.get(Calendar.DAY_OF_YEAR) + 7);
+    }
+
+    public static boolean isYesterDay(Calendar date1, Calendar date2) {
+        return (date1.get(Calendar.YEAR) == date2.get(Calendar.YEAR) && date1.get(Calendar.DAY_OF_YEAR) == date2.get(Calendar.DAY_OF_YEAR) - 1);
+    }
 }
 

@@ -11,6 +11,7 @@ import com.example.githubissuetracker.service.NetworkCallback;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class CommitViewModel extends ViewModel {
@@ -53,13 +54,7 @@ public class CommitViewModel extends ViewModel {
             public void onSuccess(List<IssueListItem> data) {
                 isLoading.setValue(false);
                 errorMessage.setValue(null);
-                if (page == 1) {
-                    issuesLiveData.setValue(data);
-                } else {
-                    List<IssueListItem> currentIssues = issuesLiveData.getValue();
-                    currentIssues.addAll(data);
-                    issuesLiveData.setValue(currentIssues);
-                }
+                updateIssueListLiveData(page, data);
             }
 
             @Override
@@ -92,12 +87,13 @@ public class CommitViewModel extends ViewModel {
             page = 1;
         }
         isLoading.postValue(true);
+        int finalPage = page;
         repository.searchIssues(query, pageSize, page, new NetworkCallback<List<IssueListItem>>() {
             @Override
             public void onSuccess(List<IssueListItem> data) {
                 isLoading.postValue(false);
                 errorMessage.postValue(null);
-                issuesLiveData.postValue(data);
+                updateIssueListLiveData(finalPage, data);
             }
 
             @Override
@@ -112,5 +108,30 @@ public class CommitViewModel extends ViewModel {
         this.searchQuery = null;
         issuesLiveData.postValue(new ArrayList<>());
         fetchNextPage();
+    }
+
+    private void updateIssueListLiveData(int forPageNo, List<IssueListItem> data) {
+        List<IssueListItem> filteredList = getFilteredList(data);
+        if (forPageNo == 1) {
+            issuesLiveData.setValue(filteredList);
+        } else {
+            List<IssueListItem> currentIssues = issuesLiveData.getValue();
+            currentIssues.addAll(filteredList);
+            issuesLiveData.setValue(currentIssues);
+        }
+    }
+
+    private List<IssueListItem> getFilteredList(List<IssueListItem> listItems) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            return listItems.stream().filter(issue -> !issue.getTitle().toLowerCase().contains("flutter")).collect(Collectors.toList());
+        } else {
+            List<IssueListItem> filteredList = new ArrayList<>();
+            for (IssueListItem issue : listItems) {
+                if (!issue.getTitle().toLowerCase().contains("flutter")) {
+                    filteredList.add(issue);
+                }
+            }
+            return filteredList;
+        }
     }
 }

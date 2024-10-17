@@ -1,7 +1,6 @@
 package com.example.githubissuetracker.ui.userprofile;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,6 +71,7 @@ public class UserProfileFragment extends Fragment {
         if(avatarUrl != null) {
             Glide.with(requireContext()) // Use 'requireContext()' in fragments
                     .load(avatarUrl) // Load the avatar URL
+                    .circleCrop()
                     .placeholder(R.drawable.avatar_placeholder) // Optional: Add a placeholder while the image loads
                     .error(R.drawable.avatar_placeholder) // Optional: Add an error image if the loading fails
                     .into(binding.profileImage); // Set the image into the ImageView
@@ -83,15 +83,15 @@ public class UserProfileFragment extends Fragment {
         }
         String userHandle = userProfile.getLogin();
         if(userHandle != null) {
-            binding.userHandle.setText(userHandle);
+            binding.userHandle.setText("@" + userHandle);
         }
         String userBio = userProfile.getBio();
         if(userBio != null) {
-            binding.userBio.setText(userBio);
+            binding.userBio.setText("Bio: " + userBio);
         }
         String publicRepos = "Public Repos: " + userProfile.getPublicRepos();
         String publicGists = "Public Gists: " + userProfile.getPublicGists();
-        String followers = "@Followers: " + userProfile.getFollowers();
+        String followers = "Followers: " + userProfile.getFollowers();
         binding.publicRepos.setText(publicRepos);
         binding.publicGists.setText(publicGists);
         binding.privateRepos.setText(followers);
@@ -106,11 +106,9 @@ public class UserProfileFragment extends Fragment {
 //            binding.errorView.setVisibility(View.VISIBLE);
 //            binding.retryButton.setVisibility(View.VISIBLE);
 //        }
-        Log.d("TEST: ", "handleErrorMessage " + errorMessage);
     }
 
     private void handleLoadingIndicator(Boolean isLoading) {
 //        binding.loadingView.setVisibility(isLoading ? View.VISIBLE : View.GONE);
-        Log.d("TEST:", "handleLoadingIndicator: " + isLoading);
     }
 }

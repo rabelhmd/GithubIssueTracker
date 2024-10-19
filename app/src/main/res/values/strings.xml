@@ -4,4 +4,8 @@
     <string name="title_commit">Commit</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_user_profile">UserProfile</string>
+    <string name="bio">Bio: %s</string>
+    <string name="public_repos">Public Repos: %d</string>
+    <string name="public_gists">Public Gists: %d</string>
+    <string name="followers">Followers: %d</string>
 </resources>

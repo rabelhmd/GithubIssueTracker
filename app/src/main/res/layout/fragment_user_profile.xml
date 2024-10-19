@@ -6,99 +6,111 @@
     android:layout_height="match_parent"
     tools:context="ui.userprofile.UserProfileFragment">
 
-    <!-- User Image -->
-    <ImageView
-        android:id="@+id/profile_image"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/circle_image"
-        android:adjustViewBounds="true"
-        android:clipToOutline="true"
-        android:elevation="8dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/avatar_placeholder"
-        app:layout_constraintBottom_toTopOf="@+id/username"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+   <androidx.constraintlayout.widget.ConstraintLayout
+       android:id="@+id/content_view"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent" >
 
-    <!-- User Name -->
-    <TextView
-        android:id="@+id/username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="User Name"
-        android:textColor="@android:color/white"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_image" />
 
-    <!-- User Handle -->
-    <TextView
-        android:id="@+id/user_handle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="\@userhandle"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
+       <!-- User Image -->
+       <ImageView
+           android:id="@+id/profile_image"
+           android:layout_width="120dp"
+           android:layout_height="120dp"
+           android:layout_marginTop="24dp"
+           android:background="@drawable/circle_image"
+           android:adjustViewBounds="true"
+           android:clipToOutline="true"
+           android:elevation="8dp"
+           android:scaleType="centerCrop"
+           android:src="@drawable/avatar_placeholder"
+           app:layout_constraintBottom_toTopOf="@+id/username"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Bio -->
-    <TextView
-        android:id="@+id/user_bio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Bio: There once was..."
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_handle" />
+       <!-- User Name -->
+       <TextView
+           android:id="@+id/username"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="8dp"
+           android:text="User Name"
+           android:textColor="@android:color/white"
+           android:textSize="22sp"
+           android:textStyle="bold"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toBottomOf="@+id/profile_image" />
 
-    <!-- Public Repos -->
-    <TextView
-        android:id="@+id/public_repos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Public Repos: 0"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_bio" />
+       <!-- User Handle -->
+       <TextView
+           android:id="@+id/user_handle"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="\@userhandle"
+           android:textColor="@android:color/white"
+           android:textSize="16sp"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toBottomOf="@+id/username" />
 
-    <!-- Public Gists -->
-    <TextView
-        android:id="@+id/public_gists"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Public Gists: 0"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/public_repos" />
+       <!-- Bio -->
+       <TextView
+           android:id="@+id/user_bio"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="8dp"
+           android:text="Bio: There once was..."
+           android:textColor="@android:color/white"
+           android:textSize="16sp"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toBottomOf="@+id/user_handle" />
 
-    <!-- Private Repos -->
-    <TextView
-        android:id="@+id/private_repos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Private Repos: 0"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/public_gists" />
+       <!-- Public Repos -->
+       <TextView
+           android:id="@+id/public_repos"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="8dp"
+           android:text="Public Repos: 0"
+           android:textColor="@android:color/white"
+           android:textSize="16sp"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toBottomOf="@+id/user_bio" />
+
+       <!-- Public Gists -->
+       <TextView
+           android:id="@+id/public_gists"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="8dp"
+           android:text="Public Gists: 0"
+           android:textColor="@android:color/white"
+           android:textSize="16sp"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toBottomOf="@+id/public_repos" />
+
+       <!-- Private Repos -->
+       <TextView
+           android:id="@+id/followers"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="8dp"
+           android:text="Followers: 0"
+           android:textColor="@android:color/white"
+           android:textSize="16sp"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toBottomOf="@+id/public_gists" />
+
+   </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include
+        android:id="@+id/common_view"
+        layout="@layout/common_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

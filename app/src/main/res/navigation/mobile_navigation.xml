@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/navigation_commit"
-        android:name="com.example.githubissuetracker.ui.commits.CommitFragment"
+        android:name="com.rabelhmd.githubissuetracker.ui.commits.CommitFragment"
         android:label="@string/title_flutter_issue_tacker"
         tools:layout="@layout/fragment_commit" />
 
     <fragment
         android:id="@+id/navigation_user_profile"
-        android:name="com.example.githubissuetracker.ui.userprofile.UserProfileFragment"
+        android:name="com.rabelhmd.githubissuetracker.ui.userprofile.UserProfileFragment"
         android:label="@string/title_user_profile"
         tools:layout="@layout/fragment_user_profile" />
 </navigation>

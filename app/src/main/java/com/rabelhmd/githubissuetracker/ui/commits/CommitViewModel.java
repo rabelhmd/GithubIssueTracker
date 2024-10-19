@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.rabelhmd.githubissuetracker.R;
 import com.rabelhmd.githubissuetracker.models.issueListItem.IssueListItem;
 import com.rabelhmd.githubissuetracker.repository.IssueListRepository;
 import com.rabelhmd.githubissuetracker.repository.IssueListRepositoryImpl;
@@ -19,7 +20,7 @@ public class CommitViewModel extends ViewModel {
     private final MutableLiveData<List<IssueListItem>> issuesLiveData = new MutableLiveData<>(new ArrayList<>());
     private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>(false);
     private final MutableLiveData<String> errorMessage = new MutableLiveData<>(null);
-    private final MutableLiveData<Boolean> showEmptyView = new MutableLiveData<>(false);
+    private final MutableLiveData<Boolean> showEmptyView = new MutableLiveData<>(null);
     private String searchQuery;
 
     public LiveData<Boolean> getIsLoading() {
@@ -81,18 +82,16 @@ public class CommitViewModel extends ViewModel {
     public void searchIssues(String q) {
         String encodedQuery = q.replace(" ", "%20");
         final String query = encodedQuery + "+repo:flutter/flutter";
-        errorMessage.postValue(null);
-        issuesLiveData.postValue(new ArrayList<>());
+        isLoading.setValue(true);
+       issuesLiveData.postValue(new ArrayList<>());
         if (searchQuery == null || !searchQuery.equals(q)) {
             searchQuery = q;
             pageCount = 1;
         }
-        isLoading.postValue(true);
         repository.searchIssues(query, pageSize, pageCount, new NetworkCallback<List<IssueListItem>>() {
             @Override
             public void onSuccess(List<IssueListItem> data) {
                 isLoading.postValue(false);
-                errorMessage.postValue(null);
                 updateIssueListLiveData(data);
             }
 

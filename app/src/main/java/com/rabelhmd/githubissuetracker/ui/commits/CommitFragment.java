@@ -1,10 +1,13 @@
 package com.rabelhmd.githubissuetracker.ui.commits;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.rabelhmd.githubissuetracker.R;
 import com.rabelhmd.githubissuetracker.databinding.FragmentCommitBinding;
 import com.rabelhmd.githubissuetracker.models.issueListItem.IssueListItem;
 import com.rabelhmd.githubissuetracker.ui.markdown.IssueDetailsViewer;
@@ -63,6 +67,18 @@ public class CommitFragment extends Fragment {
     private void setupViewModel() {
         commitViewModel = new ViewModelProvider(this).get(CommitViewModel.class);
 
+        commitViewModel.getShowEmptyView().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean s) {
+                if(s == null) return;
+                binding.commonView.getRoot().setVisibility(View.VISIBLE);
+                binding.commonView.errorView.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);  // Hide top drawable
+                binding.commonView.errorView.setText(getResources().getString(R.string.no_data_found));
+                binding.commonView.errorView.setVisibility(View.VISIBLE);
+                binding.commonView.retryButton.setVisibility(View.GONE);
+            }
+        });
+
         commitViewModel.getIssuesLiveData().observe(getViewLifecycleOwner(), new Observer<List<IssueListItem>>() {
             @Override
             public void onChanged(List<IssueListItem> issueListItems) {
@@ -81,13 +97,6 @@ public class CommitFragment extends Fragment {
             @Override
             public void onChanged(Boolean aBoolean) {
                 handleLoadingIndicator(aBoolean);
-            }
-        });
-
-        commitViewModel.getShowEmptyView().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean s) {
-                
             }
         });
     }
@@ -121,6 +130,7 @@ public class CommitFragment extends Fragment {
         binding.searchField.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                hideKeyboard();
                 commitViewModel.searchIssues(query);
                 return true;
             }
@@ -139,6 +149,14 @@ public class CommitFragment extends Fragment {
             binding.searchView.setVisibility(View.VISIBLE);
             binding.searchField.onActionViewExpanded();
             binding.searchView.requestFocus();
+        }
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        View view = requireActivity().getCurrentFocus();
+        if (view != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 }

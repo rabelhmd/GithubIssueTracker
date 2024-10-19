@@ -8,4 +8,6 @@
     <string name="public_repos">Public Repos: %d</string>
     <string name="public_gists">Public Gists: %d</string>
     <string name="followers">Followers: %d</string>
+    <string name="no_data_found">NO DATA FOUND</string>
+    <string name="unable_to_fetch">Unable to fetch issues</string>
 </resources>

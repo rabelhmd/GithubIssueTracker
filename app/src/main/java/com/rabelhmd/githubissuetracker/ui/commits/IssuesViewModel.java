@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.rabelhmd.githubissuetracker.R;
 import com.rabelhmd.githubissuetracker.models.issueListItem.IssueListItem;
 import com.rabelhmd.githubissuetracker.repository.IssueListRepository;
 import com.rabelhmd.githubissuetracker.repository.IssueListRepositoryImpl;
@@ -15,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-public class CommitViewModel extends ViewModel {
+public class IssuesViewModel extends ViewModel {
 
     private final MutableLiveData<List<IssueListItem>> issuesLiveData = new MutableLiveData<>(new ArrayList<>());
     private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>(false);
@@ -43,7 +42,7 @@ public class CommitViewModel extends ViewModel {
     private int pageCount;
     private final int pageSize = 30;
 
-    public CommitViewModel() {
+    public IssuesViewModel() {
         pageCount = 1;
         repository = new IssueListRepositoryImpl();
         fetchNextPage();

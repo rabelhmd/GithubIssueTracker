@@ -3,7 +3,6 @@ package com.rabelhmd.githubissuetracker.ui.commits;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,11 +23,11 @@ import com.rabelhmd.githubissuetracker.models.issueListItem.IssueListItem;
 import com.rabelhmd.githubissuetracker.ui.markdown.IssueDetailsViewer;
 
 import java.util.List;
-public class CommitFragment extends Fragment {
+public class IssuesFragment extends Fragment {
 
     private IssueAdapter issueAdapter;
     private FragmentCommitBinding binding;
-    private CommitViewModel commitViewModel;
+    private IssuesViewModel commitViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -65,7 +64,7 @@ public class CommitFragment extends Fragment {
     }
 
     private void setupViewModel() {
-        commitViewModel = new ViewModelProvider(this).get(CommitViewModel.class);
+        commitViewModel = new ViewModelProvider(this).get(IssuesViewModel.class);
 
         commitViewModel.getShowEmptyView().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override

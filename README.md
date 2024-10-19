@@ -34,5 +34,5 @@ The GitHub Issue Tracker is an advanced android application built to offer an ef
 
 ## Screenshots
 
-![IssuesList](screens/1_Commits)
-![IssueDetails](screens/2_Details)
+![IssuesList](screens/1_Commits.png)
+![IssueDetails](screens/2_Details.png)

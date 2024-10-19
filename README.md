@@ -31,3 +31,9 @@ The GitHub Issue Tracker is an advanced android application built to offer an ef
 - **Image Loading**: [Glide](https://github.com/bumptech/glide) optimizes the user experience by seamlessly loading and displaying images in view components with efficiency.
 
 - **Markdown Rendering**: [Markwon](https://github.com/noties/Markwon) guarantees precise rendering of markdown content, ensuring that issue descriptions are clearly formatted and easy to read.
+
+## Screenshots
+
+![IssuesList](screens/1.Commts.png.png)
+![IssueDetails](screens/2.Details.png)
+![UserProile](screens/3.UserProfile.png)

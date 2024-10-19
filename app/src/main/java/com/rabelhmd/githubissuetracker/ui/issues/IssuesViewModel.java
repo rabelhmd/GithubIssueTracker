@@ -1,4 +1,4 @@
-package com.rabelhmd.githubissuetracker.ui.commits;
+package com.rabelhmd.githubissuetracker.ui.issues;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

@@ -1,4 +1,4 @@
-package com.rabelhmd.githubissuetracker.ui.commits;
+package com.rabelhmd.githubissuetracker.ui.issues;
 
 import com.bumptech.glide.Glide;
 import com.rabelhmd.githubissuetracker.R;

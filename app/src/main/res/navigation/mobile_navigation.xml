@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_commit"
-        android:name="com.rabelhmd.githubissuetracker.ui.commits.IssuesFragment"
+        android:name="com.rabelhmd.githubissuetracker.ui.issues.IssuesFragment"
         android:label="@string/title_flutter_issue_tacker"
         tools:layout="@layout/fragment_commit" />
 

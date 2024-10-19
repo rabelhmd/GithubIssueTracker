@@ -1,4 +1,4 @@
-package com.rabelhmd.githubissuetracker.ui.commits;
+package com.rabelhmd.githubissuetracker.ui.issues;
 
 import android.content.Context;
 import android.content.Intent;

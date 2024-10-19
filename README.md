@@ -33,9 +33,13 @@ The GitHub Issue Tracker is an advanced android application built to offer an ef
 - **Markdown Rendering**: [Markwon](https://github.com/noties/Markwon) guarantees precise rendering of markdown content, ensuring that issue descriptions are clearly formatted and easy to read.
 
 ## Screenshots
-<p float="left">
-  <img src="screens/1_Commits.png" alt="IssuesList" height="300"/>
-  <img src="screens/2_DetailsScreen.png" alt="IssueDetails" height="300"/>
-  <img src="screens/3_UserProfile.png" alt="UserProfile" height="300"/>
-</p>
+
+<div style="text-align: center;">
+  <p float="left">
+    <img src="screens/1_Commits.png" alt="IssuesList" height="300" style="margin-right: 10px;"/>
+    <img src="screens/2_DetailsScreen.png" alt="IssueDetails" height="300" style="margin-right: 10px;"/>
+    <img src="screens/3_UserProfile.png" alt="UserProfile" height="300"/>
+  </p>
+</div>
+
 

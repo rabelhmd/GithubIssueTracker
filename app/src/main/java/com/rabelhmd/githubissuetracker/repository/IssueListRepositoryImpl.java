@@ -8,6 +8,7 @@ import com.rabelhmd.githubissuetracker.service.ApiClient;
 import com.rabelhmd.githubissuetracker.service.GitHubApiService;
 import com.rabelhmd.githubissuetracker.service.NetworkCallback;
 
+import java.net.SocketException;
 import java.util.List;
 
 import retrofit2.Call;

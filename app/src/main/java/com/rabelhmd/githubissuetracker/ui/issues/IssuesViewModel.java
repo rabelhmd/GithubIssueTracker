@@ -52,6 +52,7 @@ public class IssuesViewModel extends ViewModel {
         if (Boolean.TRUE.equals(isLoading.getValue())) {
             return;
         }
+        showEmptyView.setValue(false);
         isLoading.setValue(true);
         errorMessage.setValue(null);
         repository.fetchIssues("flutter", "flutter", pageCount, pageSize, new NetworkCallback<List<IssueListItem>>() {
@@ -81,8 +82,9 @@ public class IssuesViewModel extends ViewModel {
     public void searchIssues(String q) {
         String encodedQuery = q.replace(" ", "%20");
         final String query = encodedQuery + "+repo:flutter/flutter";
+        showEmptyView.setValue(false);
         isLoading.setValue(true);
-       issuesLiveData.postValue(new ArrayList<>());
+        issuesLiveData.postValue(new ArrayList<>());
         if (searchQuery == null || !searchQuery.equals(q)) {
             searchQuery = q;
             pageCount = 1;

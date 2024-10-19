@@ -70,11 +70,19 @@ public class IssuesFragment extends Fragment {
             @Override
             public void onChanged(Boolean s) {
                 if(s == null) return;
-                binding.commonView.getRoot().setVisibility(View.VISIBLE);
-                binding.commonView.errorView.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);  // Hide top drawable
-                binding.commonView.errorView.setText(getResources().getString(R.string.no_data_found));
-                binding.commonView.errorView.setVisibility(View.VISIBLE);
-                binding.commonView.retryButton.setVisibility(View.GONE);
+
+                if(s == true) {
+                    binding.commonView.getRoot().setVisibility(View.VISIBLE);
+                    binding.commonView.errorView.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);  // Hide top drawable
+                    binding.commonView.errorView.setText(getResources().getString(R.string.no_data_found));
+                    binding.commonView.errorView.setVisibility(View.VISIBLE);
+                    binding.commonView.retryButton.setVisibility(View.GONE);
+                }
+                else {
+//                    binding.commonView.getRoot().setVisibility(View.VISIBLE);
+                    binding.commonView.errorView.setVisibility(View.GONE);
+                    binding.commonView.retryButton.setVisibility(View.GONE);
+                }
             }
         });
 

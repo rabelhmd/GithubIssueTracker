@@ -12,13 +12,7 @@
         android:layout_height="?attr/actionBarSize"
         app:title="Issue Details" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:padding="12dp"
-            android:id="@+id/markdownTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </ScrollView>
+    <include
+        android:id="@+id/issue_details_container"
+        layout="@layout/fragment_issue_details" />
 </LinearLayout>

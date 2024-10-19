@@ -10,4 +10,9 @@
     <color name="background_color">#333333</color>
     <color name="primaryColor">#2196F3</color>
     <color name="bottom_nav_color">#1A1A1A</color>
+    <color name="error">#C8D22F2F</color>
+    <color name="text_color_muted">#7D8386</color>
+    <color name="state_closed">#A371F7</color>
+    <color name="state_open">#3FB950</color>
+    <color name="royal_blue">#2979FF</color>
 </resources>

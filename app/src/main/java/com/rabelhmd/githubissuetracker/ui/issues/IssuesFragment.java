@@ -49,7 +49,8 @@ public class IssuesFragment extends Fragment {
         issueAdapter = new IssueAdapter(new IssueAdapterCallback() {
             @Override
             public void loadNextPage() {
-                commitViewModel.fetchNextPage();
+                commitViewModel.onRetryClicked();
+                //commitViewModel.fetchNextPage();
             }
 
             @Override
@@ -71,7 +72,7 @@ public class IssuesFragment extends Fragment {
             public void onChanged(Boolean s) {
                 if(s == null) return;
 
-                if(s == true) {
+                if(s) {
                     binding.commonView.getRoot().setVisibility(View.VISIBLE);
                     binding.commonView.errorView.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);  // Hide top drawable
                     binding.commonView.errorView.setText(getResources().getString(R.string.no_data_found));
@@ -113,9 +114,10 @@ public class IssuesFragment extends Fragment {
             binding.commonView.errorView.setVisibility(View.GONE);
             binding.commonView.retryButton.setVisibility(View.GONE);
         } else {
-            binding.commonView.errorView.setText(errorMessage);
+            binding.commonView.getRoot().setVisibility(View.VISIBLE);
             binding.commonView.errorView.setVisibility(View.VISIBLE);
             binding.commonView.retryButton.setVisibility(View.VISIBLE);
+            binding.commonView.errorView.setText(getString(R.string.unable_to_fetch, errorMessage));
         }
     }
 
@@ -137,8 +139,8 @@ public class IssuesFragment extends Fragment {
         binding.searchField.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                hideKeyboard();
-                commitViewModel.searchIssues(query);
+                toggleKeyboard(false);
+                commitViewModel.searchIssues(query.trim());
                 return true;
             }
 
@@ -153,17 +155,22 @@ public class IssuesFragment extends Fragment {
         if (binding.searchView.getVisibility() == View.VISIBLE) {
             binding.searchView.setVisibility(View.GONE);
         } else {
+            toggleKeyboard(true);
             binding.searchView.setVisibility(View.VISIBLE);
             binding.searchField.onActionViewExpanded();
             binding.searchView.requestFocus();
         }
     }
 
-    private void hideKeyboard() {
+    private void toggleKeyboard(Boolean isEnable) {
         InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         View view = requireActivity().getCurrentFocus();
         if (view != null) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            if(isEnable) {
+                imm.showSoftInputFromInputMethod(view.getWindowToken(), 0);
+            } else {
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
         }
     }
 }

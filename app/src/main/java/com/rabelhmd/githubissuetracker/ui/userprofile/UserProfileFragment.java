@@ -113,6 +113,7 @@ public class UserProfileFragment extends Fragment {
             binding.commonView.errorView.setVisibility(View.VISIBLE);
             binding.commonView.retryButton.setVisibility(View.VISIBLE);
             binding.commonView.loadingView.setVisibility(View.GONE);
+            binding.commonView.errorView.setText(getString(R.string.unable_to_fetch, errorMessage));
         }
     }
 

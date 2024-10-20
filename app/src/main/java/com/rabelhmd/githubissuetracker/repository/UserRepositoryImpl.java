@@ -5,6 +5,8 @@ import com.rabelhmd.githubissuetracker.service.ApiClient;
 import com.rabelhmd.githubissuetracker.service.GitHubApiService;
 import com.rabelhmd.githubissuetracker.service.NetworkCallback;
 
+import java.net.UnknownHostException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -21,15 +23,19 @@ public class UserRepositoryImpl implements UserRepository {
         apiService.fetchUser(userName).enqueue(new Callback<UserProfile>() {
             @Override
             public void onResponse(Call<UserProfile> call, Response<UserProfile> response) {
-                if(response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null) {
                     networkCallback.onSuccess(response.body());
-                }else {
-                    networkCallback.onFailure(new Exception("Failed to fetch issues"));
+                } else {
+                    networkCallback.onFailure(new Exception("Failed to fetch UserProfile"));
                 }
             }
+
             @Override
             public void onFailure(Call<UserProfile> call, Throwable t) {
-                networkCallback.onFailure(new Exception("Failed to fetch issues"));
+                if (t instanceof UnknownHostException) {
+                    networkCallback.onFailure(new IllegalStateException());
+                } else
+                    networkCallback.onFailure(new Exception("Failed to fetch UserProfile"));
             }
         });
     }

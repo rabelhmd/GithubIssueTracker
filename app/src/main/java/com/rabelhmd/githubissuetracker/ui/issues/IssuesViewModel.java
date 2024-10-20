@@ -9,6 +9,7 @@ import com.rabelhmd.githubissuetracker.repository.IssueListRepository;
 import com.rabelhmd.githubissuetracker.repository.IssueListRepositoryImpl;
 import com.rabelhmd.githubissuetracker.service.NetworkCallback;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,16 +41,18 @@ public class IssuesViewModel extends ViewModel {
 
     private final IssueListRepository repository;
     private int pageCount;
+    private boolean reachedEndOfList = false;
     private final int pageSize = 30;
 
     public IssuesViewModel() {
         pageCount = 1;
+        reachedEndOfList = false;
         repository = new IssueListRepositoryImpl();
         fetchNextPage();
     }
 
     public void fetchNextPage() {
-        if (Boolean.TRUE.equals(isLoading.getValue())) {
+        if (Boolean.TRUE.equals(isLoading.getValue()) || reachedEndOfList) {
             return;
         }
         showEmptyView.setValue(false);
@@ -66,7 +69,11 @@ public class IssuesViewModel extends ViewModel {
             @Override
             public void onFailure(Exception e) {
                 isLoading.setValue(false);
-                errorMessage.setValue("Unable to fetch issues");
+                if(e instanceof IllegalStateException) {
+                    errorMessage.setValue("No Internet!");
+                } else {
+                    errorMessage.setValue("Unable to fetch issues");
+                }
             }
         });
     }
@@ -80,40 +87,56 @@ public class IssuesViewModel extends ViewModel {
     }
 
     public void searchIssues(String q) {
-        String encodedQuery = q.replace(" ", "%20");
+        if (Boolean.TRUE.equals(isLoading.getValue())) {
+            return;
+        }
+
+        String encodedQuery = URLEncoder.encode(q);
         final String query = encodedQuery + "+repo:flutter/flutter";
-        showEmptyView.setValue(false);
-        isLoading.setValue(true);
-        issuesLiveData.postValue(new ArrayList<>());
         if (searchQuery == null || !searchQuery.equals(q)) {
             searchQuery = q;
             pageCount = 1;
+            reachedEndOfList = false;
+            issuesLiveData.postValue(new ArrayList<>());
+        } else if (reachedEndOfList) {
+            return;
         }
+        showEmptyView.setValue(false);
+        isLoading.setValue(true);
         repository.searchIssues(query, pageSize, pageCount, new NetworkCallback<List<IssueListItem>>() {
             @Override
             public void onSuccess(List<IssueListItem> data) {
                 isLoading.postValue(false);
+                pageCount += 1;
                 updateIssueListLiveData(data);
             }
-
             @Override
             public void onFailure(Exception e) {
                 isLoading.postValue(false);
-                errorMessage.postValue("Unable to fetch issues");
+                if(e instanceof IllegalStateException) {
+                    errorMessage.postValue("No Internet!");
+                } else {
+                    errorMessage.postValue("Unable to fetch issues");
+                }
             }
         });
     }
 
     public void clearSearchQuery() {
         this.pageCount = 1;
+        reachedEndOfList = false;
         this.searchQuery = null;
         issuesLiveData.postValue(new ArrayList<>());
         fetchNextPage();
     }
 
     private void updateIssueListLiveData(List<IssueListItem> data) {
+        if (data == null || data.isEmpty()) {
+            reachedEndOfList = true;
+        }
+
         List<IssueListItem> filteredList = getFilteredList(data);
-        if (filteredList.isEmpty()) {
+        if (filteredList.isEmpty() && (issuesLiveData.getValue() == null || issuesLiveData.getValue().isEmpty())) {
             showEmptyView.setValue(true);
             return;
         }
@@ -122,6 +145,9 @@ public class IssuesViewModel extends ViewModel {
             issuesLiveData.setValue(filteredList);
         } else {
             List<IssueListItem> currentIssues = issuesLiveData.getValue();
+            if (currentIssues == null) {
+                currentIssues = new ArrayList<>();
+            }
             currentIssues.addAll(filteredList);
             issuesLiveData.setValue(currentIssues);
         }

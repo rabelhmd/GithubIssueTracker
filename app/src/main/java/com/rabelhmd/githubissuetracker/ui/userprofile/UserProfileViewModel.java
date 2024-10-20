@@ -43,7 +43,11 @@ public class UserProfileViewModel extends ViewModel {
             }
             @Override
             public void onFailure(Exception e) {
-                onFailureState(e.getLocalizedMessage());
+                if(e instanceof IllegalStateException) {
+                    onFailureState("No Internet!");
+                } else {
+                    onFailureState(e.getLocalizedMessage());
+                }
             }
         });
     }

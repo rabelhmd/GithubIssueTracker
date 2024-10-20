@@ -8,7 +8,7 @@ import com.rabelhmd.githubissuetracker.service.ApiClient;
 import com.rabelhmd.githubissuetracker.service.GitHubApiService;
 import com.rabelhmd.githubissuetracker.service.NetworkCallback;
 
-import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -33,7 +33,11 @@ public class IssueListRepositoryImpl implements IssueListRepository {
             }
             @Override
             public void onFailure(@NonNull Call<List<IssueListItem>> call, @NonNull Throwable t) {
-                networkCallback.onFailure(new Exception("Failed to fetch issues"));
+                if(t instanceof UnknownHostException) {
+                    networkCallback.onFailure(new IllegalStateException());
+                } else {
+                    networkCallback.onFailure(new Exception("Failed to fetch issues"));
+                }
             }
         });
     }
@@ -52,7 +56,11 @@ public class IssueListRepositoryImpl implements IssueListRepository {
 
             @Override
             public void onFailure(Call<SearchResult> call, Throwable t) {
-                networkCallback.onFailure(new Exception("Failed to fetch issues"));
+                if (t instanceof UnknownHostException) {
+                    networkCallback.onFailure(new IllegalStateException());
+                } else {
+                    networkCallback.onFailure(new Exception("Failed to fetch issues"));
+                }
             }
         });
     }
